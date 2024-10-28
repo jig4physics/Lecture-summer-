@@ -19,11 +19,11 @@ async def fetch_q(q: Optional[str] = None):
         t = Transcription()
         y = YoutubeOperations()
 
-        print("Query", q)    
+        print("[Log] Downloading", q)    
         # Download file from youtube
-        filename = y.download(URL=q)
+        filename = y.download(url=q)
     
-        
+        print("[Log] Transcribing", filename)
         # Transcribe
         data = t.transcriptFile(filename=filename)
         return {"data": data}
