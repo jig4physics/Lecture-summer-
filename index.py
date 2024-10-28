@@ -20,6 +20,7 @@ async def fetch_q(q: Optional[str] = None):
         y = YoutubeOperations()
         text_saver = SaveText()
         audio_generator = TextToAudio()
+        summarize = SummarizeText()
 
         # Download file from youtube
         filename = y.download(url=q)
@@ -28,10 +29,13 @@ async def fetch_q(q: Optional[str] = None):
         data = t.transcriptFile(filename=filename)
 
         # save output to text file 
-        text_saver.save(filename, data)
+        text_saver.save(filename=filename, content=data)
+
+        # summarize Text
+        summarizedText = summarize.summarize(text=data)
 
         # convert to Audio using gTTS
-        audio_generator.generateAudio(filename, filename)
+        audio_generator.generateAudio(filename=filename, content=summarizedText)
         return {"data": data}
     except Exception as e:
         print("Error", e)
