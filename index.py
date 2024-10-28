@@ -18,6 +18,7 @@ async def fetch_q(q: Optional[str] = None):
     try:
         t = Transcription()
         y = YoutubeOperations()
+        text_saver = SaveText()
 
         print("[Log] Downloading", q)    
         # Download file from youtube
@@ -26,6 +27,7 @@ async def fetch_q(q: Optional[str] = None):
         print("[Log] Transcribing", filename)
         # Transcribe
         data = t.transcriptFile(filename=filename)
+        text_saver.save(filename, data)
         return {"data": data}
     except Exception as e:
         print("Error", e)
